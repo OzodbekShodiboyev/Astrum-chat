@@ -1,47 +1,72 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="{{ asset('css/login.css') }}" rel="stylesheet" />
+    <title>Kirish</title>
+</head>
+<body>
+    <section>
+        <div class="form-box card">
+            <div class="form-value ">
+        <!-- Session Status -->
+        <x-auth-session-status class="mb-4" :status="session('status')" />
+    
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+            <h2>Kirish</h2>
+            <div class="inputbox">
+                <ion-icon name="mail"></ion-icon>
+                <input id="email" type="text" name="email" required :value="old('email')"  required autofocus autocomplete="username" >
+                <label for="email">Emailingiz</label>
+                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            </div>
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+            <div class="inputbox">
+                <ion-icon name="lock-closed" onclick="togglePasswordVisibility()"></ion-icon>
+                <input id="password" type="password" name="password" required autocomplete="current-password">
+                <label for="password">Parolingiz</label>
+                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            </div>
+    
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
+            <div class="flex items-center justify-end mt-4">
+                <button>
+                    {{ __('Kirish') }}
+                </button>
+            </div>
+            <div class="register">
+                <p>Sizda akkaunt yo'qmi? <a href="./register">Ro'yxatdan o'tish</a></p>
+            </div>
+            <div class="register">
+                @if (Route::has('password.request'))
+                <a class="forget mt-4" href="{{ route('password.request') }}">
+                    {{ __('Parolingizni unutdingizmi?') }}
                 </a>
             @endif
+            </div>
+           
+        </form>
+    </div>
+</div>
+</section>
 
-            <x-primary-button class="ml-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    <script>
+        function togglePasswordVisibility() {
+            var password = document.getElementById("password");
+            if (password.type === "password") {
+                password.type = "text";
+            } else {
+                password.type = "password";
+            }
+        }
+    </script>
+    
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
+
+

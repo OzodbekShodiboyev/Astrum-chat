@@ -1,52 +1,87 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+<!DOCTYPE html>
+<html lang="en">
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="{{ asset('css/login.css') }}" rel="stylesheet" />
+    <title>Ro'yxatdan o'tish</title>
+</head>
+
+<body>
+    <section>
+        <div class="form-box card">
+            <div class="form-value ">
+                <form method="POST" action="{{ route('register') }}">
+                    @csrf
+
+                    <!-- Name -->
+                    {{-- <div>
+                        <x-input-label for="name" :value="__('Name')" />
+                        <x-text-input  class="block mt-1 w-full" type="text" 
+                            />
+                      
+                    </div> --}}
+
+                    <h2>Ro'yxatdan o'tish</h2>
+                    <div class="inputbox">
+                        <ion-icon name="person"></ion-icon>
+                        <input id="name" name="name" type="text" :value="old('name')" required autofocus autocomplete="name" >
+                        <label for="name">Ismingiz</label>
+                    </div>
+                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
+
+                    <!-- Email Address -->
+
+                    <div class="inputbox">
+                        <ion-icon name="mail"></ion-icon>
+                        <input id="email" type="text" name="email"  :value="old('email')" required autocomplete="username">
+                        <label for="email">Emailingiz</label>
+                    </div>
+
+                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+
+                    <!-- Password -->
+
+                    <div class="inputbox">
+                        <ion-icon name="lock-closed" onclick="togglePasswordVisibility()"></ion-icon>
+                        <input id="password" type="password" id="passwordInput" name="password" required autocomplete="new-password">
+                        <label for="password">Parolingiz</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <ion-icon name="lock-closed" onclick="togglePasswordVisibility()"></ion-icon>
+                        <input id="password_confirmation" type="password" id="passwordInput"  name="password_confirmation" required autocomplete="new-password">
+                        <label for="password_confirmation">Parolingiz tasdiqlash</label>
+                    </div>
+
+                    <div class="flex items-center justify-end mt-4">
+
+                        <x-primary-button class="ml-4">
+                            {{ __("Ro'yxatdan o'tish") }}
+                        </x-primary-button>
+                    </div>
+                    <div class="register">
+                        <p>Sizda akkaunt bormi? <a href="./login">Akkauntga kirish</a></p>
+                    </div>
+                </form>
+            </div>
         </div>
+    </section>
+    <script>
+        function togglePasswordVisibility() {
+            var password = document.getElementById("password");
+            if (password.type === "password") {
+                password.type = "text";
+            } else {
+                password.type = "password";
+            }
+        }
+    </script>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ml-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+</html>
